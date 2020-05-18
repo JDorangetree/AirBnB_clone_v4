@@ -20,4 +20,10 @@ header .logo {
 }
 .available {
     background: #ff545f;
+    top: 15.5px;
+    position: absolute;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
