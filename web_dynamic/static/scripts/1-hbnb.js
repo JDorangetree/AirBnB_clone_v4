@@ -2,10 +2,10 @@ $(document).ready(function(){
     let amenities = [];
     $('input[type="checkbox"]').change(function(){
         if($(this).is(":checked") == true){
-            amenities.push($(this).attr('data-id'));
+            amenities.push($(this).val());
         }
         else if($(this).is("checked") == false){
-            let value = $(this).attr('data-id')
+            let value = $(this).val()
             amenities = amenities.filter(function(item) {
             return item !== value
         })
