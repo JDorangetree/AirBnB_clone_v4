@@ -32,19 +32,26 @@ $(function () {
         type: 'post',
         success: function (data) {
             let dict = {}
-            $.get('http://0.0.0.0:5001/api/v1/users/', function (data) {
+            $.get('http://0.0.0.0:5001/api/v1/users/', function get_name (data) {
                data.forEach(function (i) {
-                   dict[i.id] = i.first_name
+                   dict[i.id] = i.first_name + " " + i.last_name
                })
             })
+            function sleep (time) {
+              return new Promise((resolve) => setTimeout(resolve, time));
+            }
+            sleep(500).then(() => {
+    // Do something after the sleep!
+
             data.forEach(function (i) {
                 $('.places').append(`<article><div class="title_box"><h2>${i.name}` +
                     `</h2><div class="price_by_night">${i.price_by_night}</div>` +
                     `</div><div class="information"><div class="max_guest">` +
                     `${i.max_guest}</div><div class="number_rooms">${i.number_rooms}</div>` +
                     `<div class="number_bathrooms">${i.number_bathrooms}</div></div>` +
-                    `<div class="user"><b>Owner:${i.user_id}</b></div><div class="description">${i.description}</div></article>`)
+                    `<div class="user"><b>Owner:${dict[i.user_id]}</b></div><div class="description">${i.description}</div></article>`)
             })
+            });
         }
     })
 })
