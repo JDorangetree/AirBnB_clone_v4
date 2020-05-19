@@ -22,6 +22,8 @@ $(document).ready(function() {
 })
 $(function () {
     let id;
+    let name;
+    let last_name;
     $.ajax({
         data: JSON.stringify({"amenities": amenities}),
         url: 'http://0.0.0.0:5001/api/v1/places_search/',
@@ -29,19 +31,18 @@ $(function () {
         dataType: 'json',
         type: 'post',
         success: function (data) {
-            console.log(data)
             data.forEach(function (i) {
                 id = i.user_id
-                console.log(id)
+                $.get('http://0.0.0.0:5001/api/v1/users/' + id, function (data) {
+                    name = data.first_name;
+                    last_name = data.last_name;
+                })
                 $('.places').append(`<article><div class="title_box"><h2>${i.name}` +
                     `</h2><div class="price_by_night">${i.price_by_night}</div>` +
                     `</div><div class="information"><div class="max_guest">` +
                     `${i.max_guest}</div><div class="number_rooms">${i.number_rooms}</div>` +
                     `<div class="number_bathrooms">${i.number_bathrooms}</div></div>` +
-                    `<div class="user"><b>Owner:</b></div><div class="description">${i.description}</div></article>`)
-                $.get('http://0.0.0.0:5001/api/v1/users/' + id, function (data) {
-                    $('b').html('Owner:' + data.first_name + ' ' + data.last_name)
-                })
+                    `<div class="user"><b>Owner:${name}</b></div><div class="description">${i.description}</div></article>`)
             })
         }
     })
